@@ -20,12 +20,13 @@ def gameMain():
     currentPlayer = Seed.CROSS.value
     #Tablero
     cells = [''] * SIZE
-    
+    turno = 1
     muestra(SIZE)
     newGame(cells, SIZE, currentPlayer, currentState)
 
     while currentState == State.PLAYING:
-        stepGame(cells, currentPlayer, currentState)
+        stepGame(cells, currentPlayer,turno)
+        turno = turno + 1
         Board(cells)
         #Verifica si el estado del juego     
         if posWin(cells,SIZE,currentPlayer,currentState) == State.CROSS_WON:
@@ -59,15 +60,19 @@ def newGame(cells, SIZE, currentPlayer, currentState):
     currentPlayer = Seed.CROSS.value
     currentState = State.PLAYING
     
-def stepGame(cells, currentPlayer, currentState):
-    flag = True
-    while flag:
-        tiro = int(input('{} ingresa un movimiento [1-9]:'.format(currentPlayer)))
-        if tiro > 0 and tiro <= 9 and cells[tiro - 1] == Seed.NO_SEED.value:
-            cells[tiro - 1] = currentPlayer
-            flag = False
-        else:
-            print('El movimiento en {} no es una jugada valida. Intenta otra vez...'.format(tiro))
+def stepGame(cells, currentPlayer,turno):
+    print(turno)
+    if(currentPlayer == Seed.CROSS.value):
+        MoveIA(cells , turno, currentPlayer)
+    else:
+        flag = True
+        while flag:
+            tiro = int(input('{} ingresa un movimiento [1-9]:'.format(currentPlayer)))
+            if tiro > 0 and tiro <= 9 and cells[tiro - 1] == Seed.NO_SEED.value:
+                cells[tiro - 1] = currentPlayer
+                flag = False
+            else:
+                print('El movimiento en {} no es una jugada valida. Intenta otra vez...'.format(tiro))
 
 def muestra(size):
     arrMuestra = [''] * size
@@ -109,5 +114,20 @@ def posWin(cells,size,currentPlayer,currentState):
             if(cells[i] == Seed.NO_SEED.value):
                 return State.PLAYING
     return State.DRAW
+
+def MoveIA(cells, turno, currentPlayer):
+    switch(turno, cells, currentPlayer)
+
+def switch(turno, cells, currentPlayer):   #hacer los casos de la ia
+    if turno == 1:
+        cells[0] = currentPlayer
+    elif turno== 3:
+        pass
+    elif turno == 5:
+        pass
+    elif turno == 7:
+        pass
+    elif turno == 9:
+        pass
 
 main()
