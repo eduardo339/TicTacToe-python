@@ -139,38 +139,38 @@ def switch(turno, cells, currentPlayer,size):   #hacer los casos de la ia
 
 def moves(cells, currentPlayer):
     #CROSS
-    if cells[2] ==  cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED:   #[0][2] - [2][2] ---> [1][2]
+    if cells[0] == cells[2] == Seed.CROSS.value and cells[1] == Seed.NO_SEED.value: #[0][0] - [0][2] ---> [0][1]
+        cells[1] = currentPlayer
+    elif cells[2] ==  cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED.value:   #[0][2] - [2][2] ---> [1][2]
         cells[5] = currentPlayer
-    elif cells[8] ==  cells[6] == Seed.CROSS.value and cells[7] == Seed.NO_SEED: #[2][2] - [2][0] ---> [2][1]
+    elif cells[8] ==  cells[6] == Seed.CROSS.value and cells[7] == Seed.NO_SEED.value: #[2][2] - [2][0] ---> [2][1]
         cells[7] = currentPlayer
-    elif cells[7] ==  cells[4] == Seed.CROSS.value and cells[1] == Seed.NO_SEED: #[2][1] - [1][1] ---> [0][1]
+    elif cells[7] ==  cells[4] == Seed.CROSS.value and cells[1] == Seed.NO_SEED.value: #[2][1] - [1][1] ---> [0][1]
         cells[1] = currentPlayer
-    elif cells[4] ==  cells[5] == Seed.CROSS.value and cells[3] == Seed.NO_SEED: #[1][1] - [1][2] ---> [1][0]
+    elif cells[4] ==  cells[5] == Seed.CROSS.value and cells[3] == Seed.NO_SEED.value: #[1][1] - [1][2] ---> [1][0]
         cells[3] = currentPlayer
-    elif cells[0] ==  cells[2] == Seed.CROSS.value and cells[1] == Seed.NO_SEED: #[0][0] - [0][2] ---> [0][1]
-        cells[1] = currentPlayer
-    elif cells[0] ==  cells[6] == Seed.CROSS.value and cells[3] == Seed.NO_SEED: #[0][0] - [2][0] ---> [1][0]
+    elif cells[0] ==  cells[6] == Seed.CROSS.value and cells[3] == Seed.NO_SEED.value: #[0][0] - [2][0] ---> [1][0]
         cells[3] = currentPlayer
     #NOUGHT
-    elif cells[4] ==  cells[1] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED: #[1][1] - [0][1] ---> [2][1]
+    elif cells[4] ==  cells[1] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value: #[1][1] - [0][1] ---> [2][1]
         cells[7] = currentPlayer
-    elif cells[4] ==  cells[3] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED: #[1][1] - [1][0] ---> [1][2]
+    elif cells[4] ==  cells[3] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value: #[1][1] - [1][0] ---> [1][2]
         cells[5] = currentPlayer
-    elif cells[4] ==  cells[7] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED: #[1][1] - [2][1] ---> [0][1]
+    elif cells[4] ==  cells[7] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED.value: #[1][1] - [2][1] ---> [0][1]
         cells[1] = currentPlayer
-    elif cells[4] ==  cells[5] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED: #[1][1] - [1][2] ---> [1][0]
+    elif cells[4] ==  cells[5] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED.value: #[1][1] - [1][2] ---> [1][0]
         cells[3] = currentPlayer
-    elif cells[4] ==  cells[2] == Seed.NOUGTH.value and cells[6] == Seed.NO_SEED: #[1][1] - [0][2] ---> [2][0]
+    elif cells[4] ==  cells[2] == Seed.NOUGTH.value and cells[6] == Seed.NO_SEED.value: #[1][1] - [0][2] ---> [2][0]
         cells[6] = currentPlayer
-    elif cells[4] ==  cells[6] == Seed.NOUGTH.value and cells[2] == Seed.NO_SEED: #[1][1] - [2][0] ---> [0][2]
+    elif cells[4] ==  cells[6] == Seed.NOUGTH.value and cells[2] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
         cells[2] = currentPlayer
-    elif cells[2] ==  cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED: #[0][2] - [2][2] ---> [1][2]
+    elif cells[2] ==  cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value: #[0][2] - [2][2] ---> [1][2]
         cells[5] = currentPlayer
-    elif cells[8] ==  cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED: #[2][2] - [2][0] ---> [2][1]
+    elif cells[8] ==  cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value: #[2][2] - [2][0] ---> [2][1]
         cells[7] = currentPlayer
-    elif cells[2] ==  cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED: #[0][2] - [2][2] ---> [1][2]
+    elif cells[2] ==  cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED.value: #[0][2] - [2][2] ---> [1][2]
         cells[5] = currentPlayer
-    elif cells[8] ==  cells[6] == Seed.CROSS.value and cells[7] == Seed.NO_SEED: #[2][2] - [2][0] ---> [2][1]
+    elif cells[8] ==  cells[6] == Seed.CROSS.value and cells[7] == Seed.NO_SEED.value: #[2][2] - [2][0] ---> [2][1]
         cells[7] = currentPlayer
     #Tiro faltante    
     elif cells[2] == Seed.NO_SEED.value: #[0][2] ----> [0][2]
