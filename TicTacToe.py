@@ -25,7 +25,7 @@ def gameMain():
     newGame(cells, SIZE, currentPlayer, currentState)
 
     while currentState == State.PLAYING:
-        stepGame(cells, currentPlayer,turno)
+        stepGame(cells, currentPlayer,turno,SIZE)
         turno = turno + 1
         Board(cells)
         #Verifica si el estado del juego     
@@ -60,10 +60,10 @@ def newGame(cells, SIZE, currentPlayer, currentState):
     currentPlayer = Seed.CROSS.value
     currentState = State.PLAYING
     
-def stepGame(cells, currentPlayer,turno):
+def stepGame(cells, currentPlayer,turno,size):
     print(turno)
     if(currentPlayer == Seed.CROSS.value):
-        MoveIA(cells , turno, currentPlayer)
+        MoveIA(cells , turno, currentPlayer,size)
     else:
         flag = True
         while flag:
@@ -115,19 +115,70 @@ def posWin(cells,size,currentPlayer,currentState):
                 return State.PLAYING
     return State.DRAW
 
-def MoveIA(cells, turno, currentPlayer):
-    switch(turno, cells, currentPlayer)
+def MoveIA(cells, turno, currentPlayer,size):
+    switch(turno, cells, currentPlayer,size)
 
-def switch(turno, cells, currentPlayer):   #hacer los casos de la ia
+def switch(turno, cells, currentPlayer,size):   #hacer los casos de la ia
     if turno == 1:
         cells[0] = currentPlayer
     elif turno== 3:
-        pass
+        if cells[4] == Seed.NO_SEED.value:
+            cells[4] = currentPlayer
+        elif cells[8] == Seed.NO_SEED.value:
+            cells[8] = currentPlayer
+        else:
+            cells[2] = currentPlayer
     elif turno == 5:
-        pass
+        moves(cells, currentPlayer)
     elif turno == 7:
-        pass
+        moves(cells, currentPlayer)
     elif turno == 9:
-        pass
+        for i in range(size):
+            if(cells[i] == Seed.NO_SEED.value):
+                cells[i] = currentPlayer
 
+def moves(cells, currentPlayer):
+    #CROSS
+    if cells[2] ==  cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED:   #[0][2] - [2][2] ---> [1][2]
+        cells[5] = currentPlayer
+    elif cells[8] ==  cells[6] == Seed.CROSS.value and cells[7] == Seed.NO_SEED: #[2][2] - [2][0] ---> [2][1]
+        cells[7] = currentPlayer
+    elif cells[7] ==  cells[4] == Seed.CROSS.value and cells[1] == Seed.NO_SEED: #[2][1] - [1][1] ---> [0][1]
+        cells[1] = currentPlayer
+    elif cells[4] ==  cells[5] == Seed.CROSS.value and cells[3] == Seed.NO_SEED: #[1][1] - [1][2] ---> [1][0]
+        cells[3] = currentPlayer
+    elif cells[0] ==  cells[2] == Seed.CROSS.value and cells[1] == Seed.NO_SEED: #[0][0] - [0][2] ---> [0][1]
+        cells[1] = currentPlayer
+    elif cells[0] ==  cells[6] == Seed.CROSS.value and cells[3] == Seed.NO_SEED: #[0][0] - [2][0] ---> [1][0]
+        cells[3] = currentPlayer
+    #NOUGHT
+    elif cells[4] ==  cells[1] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED: #[1][1] - [0][1] ---> [2][1]
+        cells[7] = currentPlayer
+    elif cells[4] ==  cells[3] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED: #[1][1] - [1][0] ---> [1][2]
+        cells[5] = currentPlayer
+    elif cells[4] ==  cells[7] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED: #[1][1] - [2][1] ---> [0][1]
+        cells[1] = currentPlayer
+    elif cells[4] ==  cells[5] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED: #[1][1] - [1][2] ---> [1][0]
+        cells[3] = currentPlayer
+    elif cells[4] ==  cells[2] == Seed.NOUGTH.value and cells[6] == Seed.NO_SEED: #[1][1] - [0][2] ---> [2][0]
+        cells[6] = currentPlayer
+    elif cells[4] ==  cells[6] == Seed.NOUGTH.value and cells[2] == Seed.NO_SEED: #[1][1] - [2][0] ---> [0][2]
+        cells[2] = currentPlayer
+    elif cells[2] ==  cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED: #[0][2] - [2][2] ---> [1][2]
+        cells[5] = currentPlayer
+    elif cells[8] ==  cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED: #[2][2] - [2][0] ---> [2][1]
+        cells[7] = currentPlayer
+    elif cells[2] ==  cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED: #[0][2] - [2][2] ---> [1][2]
+        cells[5] = currentPlayer
+    elif cells[8] ==  cells[6] == Seed.CROSS.value and cells[7] == Seed.NO_SEED: #[2][2] - [2][0] ---> [2][1]
+        cells[7] = currentPlayer
+    #Tiro faltante    
+    elif cells[2] == Seed.NO_SEED.value: #[0][2] ----> [0][2]
+        cells[2] = currentPlayer
+    elif cells[5] == Seed.NO_SEED.value: #[1][2] ----> [1][2]
+        cells[5] = currentPlayer
+    elif cells[7] == Seed.NO_SEED.value: #[2][1] ----> [2][1]
+        cells[7] = currentPlayer
+    elif cells[6] == Seed.NO_SEED.value: #[2][0] ----> [2][0]
+        cells[6] = currentPlayer
 main()
