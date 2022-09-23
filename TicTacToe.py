@@ -61,13 +61,12 @@ def newGame(cells, SIZE, currentPlayer, currentState):
     currentState = State.PLAYING
     
 def stepGame(cells, currentPlayer,turno,size):
-    print(turno)
     if(currentPlayer == Seed.CROSS.value):
         MoveIA(cells , turno, currentPlayer,size)
     else:
         flag = True
         while flag:
-            tiro = int(input('{} ingresa un movimiento [1-9]:'.format(currentPlayer)))
+            tiro = int(input('Turno de las {}. Ingresa un movimiento [1-9]:'.format(currentPlayer)))
             if tiro > 0 and tiro <= 9 and cells[tiro - 1] == Seed.NO_SEED.value:
                 cells[tiro - 1] = currentPlayer
                 flag = False
@@ -116,9 +115,11 @@ def posWin(cells,size,currentPlayer,currentState):
     return State.DRAW
 
 def MoveIA(cells, turno, currentPlayer,size):
+    print('Turno de las {}. Tira en:'.format(currentPlayer))
     switch(turno, cells, currentPlayer,size)
 
 def switch(turno, cells, currentPlayer,size):   #hacer los casos de la ia
+    
     if turno == 1:
         cells[0] = currentPlayer
     elif turno== 3:
@@ -151,6 +152,8 @@ def moves(cells, currentPlayer):
         cells[3] = currentPlayer
     elif cells[0] ==  cells[6] == Seed.CROSS.value and cells[3] == Seed.NO_SEED.value: #[0][0] - [2][0] ---> [1][0]
         cells[3] = currentPlayer
+    elif cells[0] ==  cells[4] == Seed.CROSS.value and cells[8] == Seed.NO_SEED.value: #[0][0] - [2][0] ---> [1][0]
+        cells[8] = currentPlayer
     #NOUGHT
     elif cells[4] ==  cells[1] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value: #[1][1] - [0][1] ---> [2][1]
         cells[7] = currentPlayer
