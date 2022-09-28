@@ -12,15 +12,7 @@ class Seed(enum.Enum):
 
 #Metodo main
 def main():
-
-    while True:
-        gameMain()
-        again = int(input('Quieres volver a jugar?\n1.-SI\n2.-NO\n'))
-        if again == 1:
-            pass
-        else:
-            print('ADIOS :D')
-            break
+    gameMain()
 
 def gameMain():
     SIZE = 9
@@ -76,6 +68,7 @@ def stepGame(cells, currentPlayer, turno, size, go):
         #JUGADOR empieza
         if go == 1:
             if(currentPlayer == Seed.CROSS.value):
+                print(turno)
                 flag = True
                 while flag:
                     tiro = int(input('Turno de las {}. Ingresa un movimiento [1-9]:'.format(currentPlayer)))
@@ -85,6 +78,7 @@ def stepGame(cells, currentPlayer, turno, size, go):
                     else:
                         print('El movimiento en {} no es una jugada valida. Intenta otra vez...'.format(tiro))
             else:
+                print(turno)
                 MoveIA(cells , turno, currentPlayer, size, go)
             loop = False
         #MAQUINA empieza
@@ -222,28 +216,50 @@ def MovesP1(cells, currentPlayer):
         cells[6] = currentPlayer
 
 def IAPlayer2(turno, cells, currentPlayer,size):
+    medios(cells,currentPlayer)
     if turno == 2:
         if cells[4] == Seed.NO_SEED.value:
             cells[4] = currentPlayer
         else:
             cells[0] = currentPlayer
-    elif turno == 4:
-        MovesP2(cells, currentPlayer, turno)
-    elif turno == 6:
-        MovesP2(cells, currentPlayer, turno)
-    elif turno == 8:
-        MovesP2(cells, currentPlayer, turno)
 
-def MovesP2(cells, currentPlayer,trn):
-    winIA(cells, currentPlayer)
-    if cells[0] == cells[2] == Seed.CROSS.value and cells[1] == Seed.NO_SEED.value:
+    elif turno == 4:
+        if cells[2] == cells[8] and cells[5] == Seed.NO_SEED.value:
+            cells[5] = currentPlayer
+        elif cells[8] == cells[6] and cells[7] == Seed.NO_SEED.value:
+            cells[7] = currentPlayer
+        elif cells[0] == Seed.NOUGTH.value:
+            if cells[2] == cells[4]:
+                cells[6] = currentPlayer
+        elif cells[4] == Seed.NOUGTH.value:
+            if cells[0] == cells[2]:
+                cells[1] = currentPlayer
+            elif cells[0] == cells[6]:
+                cells[3] = currentPlayer    
+    elif turno == 6:
+        MovesP2(cells, currentPlayer)
+    elif turno == 8:
+        MovesP2(cells, currentPlayer)
+
+def MovesP2(cells, currentPlayer):
+    #NOUGHT
+    if cells[4] == Seed.NO_SEED.value:
+        cells[4] = currentPlayer
+    elif cells[0] == cells[2] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED.value: #[0][0] - [0][2] ---> [0][1]
         cells[1] = currentPlayer
-    elif cells[2] == cells[8] == Seed.CROSS.value and cells[5] == Seed.NO_SEED.value:
+    elif cells[2] ==  cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value:   #[0][2] - [2][2] ---> [1][2]
         cells[5] = currentPlayer
-    elif cells[0] == cells[6] == Seed.CROSS.value and cells[3] == Seed.NO_SEED.value:
-        cells[3] = currentPlayer
-    elif cells[6] == cells[8] == Seed.CROSS.value and cells[7] == Seed.NO_SEED.value:
+    elif cells[8] ==  cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value: #[2][2] - [2][0] ---> [2][1]
         cells[7] = currentPlayer
+    elif cells[7] ==  cells[4] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED.value: #[2][1] - [1][1] ---> [0][1]
+        cells[1] = currentPlayer
+    elif cells[4] ==  cells[5] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED.value: #[1][1] - [1][2] ---> [1][0]
+        cells[3] = currentPlayer
+    elif cells[0] ==  cells[6] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED.value: #[0][0] - [2][0] ---> [1][0]
+        cells[3] = currentPlayer
+    elif cells[0] ==  cells[4] == Seed.NOUGTH.value and cells[8] == Seed.NO_SEED.value: #[0][0] - [2][0] ---> [1][0]
+        cells[8] = currentPlayer
+    #CROSS - Medios
     elif cells[4] ==  cells[1] == Seed.CROSS.value and cells[7] == Seed.NO_SEED.value: #[1][1] - [0][1] ---> [2][1]
         cells[7] = currentPlayer
     elif cells[4] ==  cells[3] == Seed.CROSS.value and cells[5] == Seed.NO_SEED.value: #[1][1] - [1][0] ---> [1][2]
@@ -256,46 +272,41 @@ def MovesP2(cells, currentPlayer,trn):
         cells[6] = currentPlayer
     elif cells[4] ==  cells[6] == Seed.CROSS.value and cells[2] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
         cells[2] = currentPlayer
-
-    elif cells[8] ==  cells[7] == Seed.CROSS.value and cells[6] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
-        cells[6] = currentPlayer
-    elif cells[6] ==  cells[7] == Seed.CROSS.value and cells[8] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
-        cells[8] = currentPlayer
-
-    elif cells[0] == Seed.NO_SEED.value:
-        cells[0] = currentPlayer
-    elif cells[1] == Seed.NO_SEED.value:
-        cells[1] = currentPlayer
-    else:
-        cells[7] = currentPlayer
-
-def winIA(cells, currentPlayer):
-    if cells[4] == cells[0] == Seed.NOUGTH.value and cells[8] == Seed.NO_SEED.value:
-        cells[8] = currentPlayer
-    elif cells[4] == cells[2] == Seed.NOUGTH.value and cells[6] == Seed.NO_SEED.value:
-        cells[6] = currentPlayer
-    elif cells[4] == cells[8] == Seed.NOUGTH.value and cells[0] == Seed.NO_SEED.value:
-        cells[0] = currentPlayer
-    elif cells[4] == cells[6] == Seed.NOUGTH.value and cells[2] == Seed.NO_SEED.value:
-        cells[2] = currentPlayer
-    elif cells[4] == cells[1] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value:
-        cells[7] = currentPlayer
-    elif cells[4] == cells[3] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value:
+    elif cells[2] ==  cells[6] == Seed.CROSS.value and cells[5] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
         cells[5] = currentPlayer
-    elif cells[4] == cells[5] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED.value:
-        cells[3] = currentPlayer
-    elif cells[4] == cells[7] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED.value:
-        cells[1] = currentPlayer
-    elif cells[0] == cells[1] == Seed.NOUGTH.value and cells[2] == Seed.NO_SEED.value:
-        cells[2] = currentPlayer
-    elif cells[0] == cells[3] == Seed.NOUGTH.value and cells[6] == Seed.NO_SEED.value:
-        cells[6] = currentPlayer
-    elif cells[0] == cells[2] == Seed.NOUGTH.value and cells[1] == Seed.NO_SEED.value:
-        cells[1] = currentPlayer
-    elif cells[0] == cells[6] == Seed.NOUGTH.value and cells[3] == Seed.NO_SEED.value:
-        cells[3] = currentPlayer
-    elif cells[2] == cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value:
+
+    elif cells[2] ==  cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value: #[0][2] - [2][2] ---> [1][2]
         cells[5] = currentPlayer
-    elif cells[8] == cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value:
+    elif cells[8] ==  cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value: #[2][2] - [2][0] ---> [2][1]
         cells[7] = currentPlayer
+    elif cells[2] ==  cells[8] == Seed.NOUGTH.value and cells[5] == Seed.NO_SEED.value: #[0][2] - [2][2] ---> [1][2]
+        cells[5] = currentPlayer
+    elif cells[8] ==  cells[6] == Seed.NOUGTH.value and cells[7] == Seed.NO_SEED.value: #[2][2] - [2][0] ---> [2][1]
+        cells[7] = currentPlayer
+    #Tiro faltante    
+    tfalt(cells, currentPlayer)
+
+def medios(cells, currentPlayer):
+    if cells[4] ==  cells[1] == Seed.CROSS.value and cells[7] == Seed.NO_SEED.value: #[1][1] - [0][1] ---> [2][1]
+        cells[7] = currentPlayer
+    elif cells[4] ==  cells[3] == Seed.CROSS.value and cells[5] == Seed.NO_SEED.value: #[1][1] - [1][0] ---> [1][2]
+        cells[5] = currentPlayer
+    elif cells[4] ==  cells[7] == Seed.CROSS.value and cells[1] == Seed.NO_SEED.value: #[1][1] - [2][1] ---> [0][1]
+        cells[1] = currentPlayer
+    elif cells[4] ==  cells[5] == Seed.CROSS.value and cells[3] == Seed.NO_SEED.value: #[1][1] - [1][2] ---> [1][0]
+        cells[3] = currentPlayer
+    elif cells[4] ==  cells[2] == Seed.CROSS.value and cells[6] == Seed.NO_SEED.value: #[1][1] - [0][2] ---> [2][0]
+        cells[6] = currentPlayer
+    elif cells[4] ==  cells[6] == Seed.CROSS.value and cells[2] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
+        cells[2] = currentPlayer
+
+def tfalt(cells, currentPlayer):
+    if cells[2] == Seed.NO_SEED.value: #[0][2] ----> [0][2]
+        cells[2] = currentPlayer
+    elif cells[5] == Seed.NO_SEED.value: #[1][2] ----> [1][2]
+        cells[5] = currentPlayer
+    elif cells[7] == Seed.NO_SEED.value: #[2][1] ----> [2][1]
+        cells[7] = currentPlayer
+    elif cells[6] == Seed.NO_SEED.value: #[2][0] ----> [2][0]
+        cells[6] = currentPlayer
 main()
