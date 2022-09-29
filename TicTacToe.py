@@ -32,7 +32,13 @@ def gameMain():
     turno = 1
     muestra(SIZE)
     newGame(cells, SIZE, currentPlayer, currentState)
-    go = int(input('Selecciona tu jugador.\n1.-PLAYER 1\n2.-PLAYER 2\n'))
+
+    while True:
+        go = int(input('Selecciona tu jugador.\n1.-PLAYER 1\n2.-PLAYER 2\n'))
+        if go == 1 or go == 2:
+            break
+        else: 
+            print('Ese jugador no es una opcion valida.')
 
     while currentState == State.PLAYING:
         stepGame(cells, currentPlayer,turno,SIZE, go)
@@ -47,8 +53,7 @@ def gameMain():
             break
         elif posWin(cells,SIZE,currentPlayer,currentState) == State.DRAW:
             print('Fue empate Adios')
-            break
-
+            break        
         #Cambio de jugador
         currentPlayer = Seed.NOUGTH.value if (currentPlayer == Seed.CROSS.value) else Seed.CROSS.value
 
@@ -71,8 +76,6 @@ def newGame(cells, SIZE, currentPlayer, currentState):
     currentState = State.PLAYING
     
 def stepGame(cells, currentPlayer, turno, size, go):
-    loop = True
-    while loop:
         #JUGADOR empieza
         if go == 1:
             if(currentPlayer == Seed.CROSS.value):
@@ -100,9 +103,6 @@ def stepGame(cells, currentPlayer, turno, size, go):
                         flag = False
                     else:
                         print('El movimiento en {} no es una jugada valida. Intenta otra vez...'.format(tiro))
-            loop = False
-        else:
-            print("El jugador {} no es un jugador valido.".format(go))
 
 
 def muestra(size):
@@ -129,7 +129,6 @@ def paint(cells, size, inPaint):
             cells[i] = i + 1
 
 def posWin(cells,size,currentPlayer,currentState):
-
     #3 en linea, 3 en fila y cruzado
     if cells[0] == currentPlayer and cells[1] == currentPlayer and cells[2] == currentPlayer or \
     cells[3] == currentPlayer and cells[4] == currentPlayer and cells[5] == currentPlayer or \
@@ -153,8 +152,7 @@ def MoveIA(cells, turno, currentPlayer, size, go):
     else:
         IAPlayer1(turno, cells, currentPlayer,size)
 
-def IAPlayer1(turno, cells, currentPlayer,size):   #hacer los casos de la ia
-    
+def IAPlayer1(turno, cells, currentPlayer,size):    
     if turno == 1:
         cells[0] = currentPlayer
     elif turno== 3:
@@ -256,12 +254,10 @@ def MovesP2(cells, currentPlayer,trn):
         cells[6] = currentPlayer
     elif cells[4] ==  cells[6] == Seed.CROSS.value and cells[2] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
         cells[2] = currentPlayer
-
     elif cells[8] ==  cells[7] == Seed.CROSS.value and cells[6] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
         cells[6] = currentPlayer
     elif cells[6] ==  cells[7] == Seed.CROSS.value and cells[8] == Seed.NO_SEED.value: #[1][1] - [2][0] ---> [0][2]
         cells[8] = currentPlayer
-
     elif cells[0] == Seed.NO_SEED.value:
         cells[0] = currentPlayer
     elif cells[1] == Seed.NO_SEED.value:
